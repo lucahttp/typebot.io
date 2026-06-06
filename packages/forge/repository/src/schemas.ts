@@ -17,6 +17,8 @@ import { gmailBlock } from "@typebot.io/gmail-block";
 import { gmailBlockSchema } from "@typebot.io/gmail-block/schemas";
 import { groqBlock } from "@typebot.io/groq-block";
 import { groqBlockSchema } from "@typebot.io/groq-block/schemas";
+import { horneroDbBlock } from "@typebot.io/hornerodb-block";
+import { horneroDbBlockSchema } from "@typebot.io/hornerodb-block/schemas";
 import { mistralBlock } from "@typebot.io/mistral-block";
 import { mistralBlockSchema } from "@typebot.io/mistral-block/schemas";
 import { nocodbBlock } from "@typebot.io/nocodb-block";
@@ -51,6 +53,7 @@ export const forgedBlockSchemas = {
   [togetherAiBlock.id]: togetherAiBlockSchema,
   [openRouterBlock.id]: openRouterBlockSchema,
   [nocodbBlock.id]: nocodbBlockSchema,
+  [horneroDbBlock.id]: horneroDbBlockSchema,
   [segmentBlock.id]: segmentBlockSchema,
   [groqBlock.id]: groqBlockSchema,
   [zendeskBlock.id]: zendeskBlockSchema,
@@ -73,6 +76,7 @@ export const forgedBlockSchema = z.discriminatedUnion("type", [
   togetherAiBlockSchema,
   openRouterBlockSchema,
   nocodbBlockSchema,
+  horneroDbBlockSchema,
   segmentBlockSchema,
   groqBlockSchema,
   zendeskBlockSchema,

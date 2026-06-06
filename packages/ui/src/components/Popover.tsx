@@ -42,15 +42,15 @@ const Root = ({
 );
 
 const Trigger = (
-  props: Omit<PopoverPrimitive.Trigger.Props, "nativeButton" | "render"> & {
+  props: PopoverPrimitive.Trigger.Props & {
     render?: (props: any) => React.ReactElement;
   },
 ) => {
-  const { className, render, children, ...rest } = props;
+  const { className, render, children, nativeButton = false, ...rest } = props;
   return (
     <PopoverPrimitive.Trigger
       className={className}
-      nativeButton={false}
+      nativeButton={nativeButton}
       render={render ?? <span />}
       {...rest}
     >

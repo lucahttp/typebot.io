@@ -13,6 +13,7 @@ export const forgedBlockIds = [
   "together-ai",
   "open-router",
   "nocodb",
+  "hornerodb",
   "segment",
   "posthog",
   "groq",

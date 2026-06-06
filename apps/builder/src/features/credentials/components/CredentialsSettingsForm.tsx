@@ -16,6 +16,8 @@ import { TrashIcon } from "@typebot.io/ui/icons/TrashIcon";
 import { cn } from "@typebot.io/ui/lib/cn";
 import { type SVGProps, useMemo, useRef, useState } from "react";
 import { BasicSelect } from "@/components/inputs/BasicSelect";
+import { MercadoPagoLogo } from "@/components/logos/MercadoPagoLogo";
+import { OpenPixLogo } from "@/components/logos/OpenPixLogo";
 import { StripeLogo } from "@/components/logos/StripeLogo";
 import { WhatsAppLogo } from "@/components/logos/WhatsAppLogo";
 import { BlockIcon } from "@/features/editor/components/BlockIcon";
@@ -236,6 +238,10 @@ const CredentialsIcon = ({
       return <StripeLogo {...props} />;
     case "whatsApp":
       return <WhatsAppLogo {...props} />;
+    case "mercadopago":
+      return <MercadoPagoLogo {...props} />;
+    case "openpix":
+      return <OpenPixLogo {...props} />;
     case "http proxy":
       return null;
     default:
@@ -259,6 +265,10 @@ const CredentialsLabel = ({
       return <p className={cn("text-sm", className)}>Stripe</p>;
     case "whatsApp":
       return <p className={cn("text-sm", className)}>WhatsApp</p>;
+    case "mercadopago":
+      return <p className={cn("text-sm", className)}>Mercado Pago</p>;
+    case "openpix":
+      return <p className={cn("text-sm", className)}>OpenPix</p>;
     case "http proxy":
       return null;
     default:

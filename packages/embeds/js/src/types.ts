@@ -64,3 +64,42 @@ export type InputSubmitContent = { status?: "retry" } & (
   | TextInputSubmitContent
   | RecordingInputSubmitContent
 );
+
+export interface MercadoPagoInstance {
+  bricks: () => {
+    create: (
+      brick: string,
+      containerId: string,
+      settings: any,
+    ) => Promise<{ unmount: () => void }>;
+  };
+}
+
+export interface PaymentBrickError {
+  message: string;
+}
+
+export interface PaymentBrickSettings {
+  initialization: {
+    amount: number;
+    preferenceId?: string;
+    paymentId?: string;
+  };
+  callbacks: {
+    onReady: () => void;
+    onSubmit?: (data: any) => Promise<void>;
+    onError: (error: any) => void;
+  };
+  customization?: any;
+}
+
+export interface PaymentBrickSubmitData {
+  selectedPaymentMethod: any;
+  formData: any;
+}
+
+declare global {
+  interface Window {
+    MercadoPago?: new (publicKey: string) => MercadoPagoInstance;
+  }
+}

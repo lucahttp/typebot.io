@@ -8,6 +8,7 @@ import { difyAiBlock } from "@typebot.io/dify-ai-block";
 import { elevenlabsBlock } from "@typebot.io/elevenlabs-block";
 import { gmailBlock } from "@typebot.io/gmail-block";
 import { groqBlock } from "@typebot.io/groq-block";
+import { horneroDbBlock } from "@typebot.io/hornerodb-block";
 import { mistralBlock } from "@typebot.io/mistral-block";
 import { nocodbBlock } from "@typebot.io/nocodb-block";
 import { openRouterBlock } from "@typebot.io/open-router-block";
@@ -31,6 +32,7 @@ export const forgedBlocks = {
   [togetherAiBlock.id]: togetherAiBlock,
   [openRouterBlock.id]: openRouterBlock,
   [nocodbBlock.id]: nocodbBlock,
+  [horneroDbBlock.id]: horneroDbBlock,
   [segmentBlock.id]: segmentBlock,
   [groqBlock.id]: groqBlock,
   [zendeskBlock.id]: zendeskBlock,

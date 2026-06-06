@@ -2,6 +2,8 @@ import type { Credentials } from "@typebot.io/credentials/schemas";
 import { forgedBlocks } from "@typebot.io/forge-repository/definitions";
 import { Dialog } from "@typebot.io/ui/components/Dialog";
 import { CreateStripeCredentialsDialogBody } from "@/features/blocks/inputs/payment/components/CreateStripeCredentialsDialog";
+import { MercadoPagoCreateModalContent } from "@/features/blocks/inputs/payment/components/MercadoPagoConfigModal";
+import { OpenPixCreateModalContent } from "@/features/blocks/inputs/payment/components/OpenPixConfigModal";
 import { GoogleSheetConnectDialogBody } from "@/features/blocks/integrations/googleSheets/components/GoogleSheetsConnectDialog";
 import { SmtpCredentialsCreateDialogBody } from "@/features/blocks/integrations/sendEmail/components/SmtpCredentialsCreateDialog";
 import { ForgedCredentialsCreateDialogBody } from "@/features/forge/components/credentials/ForgedCredentialsCreateDialog";
@@ -52,6 +54,20 @@ const CredentialsCreateDialogPopup = ({
   if (type === "stripe")
     return (
       <CreateStripeCredentialsDialogBody
+        onNewCredentials={onSubmit}
+        onClose={onClose}
+      />
+    );
+  if (type === "mercadopago")
+    return (
+      <MercadoPagoCreateModalContent
+        onNewCredentials={onSubmit}
+        onClose={onClose}
+      />
+    );
+  if (type === "openpix")
+    return (
+      <OpenPixCreateModalContent
         onNewCredentials={onSubmit}
         onClose={onClose}
       />

@@ -40,7 +40,43 @@ export const convertInputToWhatsAppMessages = async ({
     case InputBlockType.NUMBER:
     case InputBlockType.PHONE:
     case InputBlockType.URL:
-    case InputBlockType.PAYMENT:
+    case InputBlockType.PAYMENT: {
+      const paymentLinkUrl = input.runtimeOptions?.paymentLinkUrl;
+      const amountLabel = input.runtimeOptions?.amountLabel;
+      const buttonLabel = input.options?.labels?.button || "Já Paguei";
+
+      if (paymentLinkUrl) {
+        return [
+          {
+            type: "text" as const,
+            text: {
+              body: `*Pagamento necessário: ${amountLabel ?? ""}*\n\nPor favor, utilize o link abaixo para realizar o pagamento:\n${paymentLinkUrl}`,
+            },
+          },
+          {
+            type: "interactive" as const,
+            interactive: {
+              type: "button" as const,
+              body: {
+                text: "Clique no botão abaixo após realizar o pagamento para confirmar:",
+              },
+              action: {
+                buttons: [
+                  {
+                    type: "reply" as const,
+                    reply: {
+                      id: "verify_payment",
+                      title: buttonLabel.slice(0, 20),
+                    },
+                  },
+                ],
+              },
+            },
+          },
+        ];
+      }
+      return [];
+    }
     case InputBlockType.RATING:
     case InputBlockType.TEXT:
       return [];

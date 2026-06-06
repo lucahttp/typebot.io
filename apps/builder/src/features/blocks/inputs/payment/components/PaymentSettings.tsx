@@ -17,6 +17,8 @@ import { CredentialsDropdown } from "@/features/credentials/components/Credentia
 import { useWorkspace } from "@/features/workspace/WorkspaceProvider";
 import { currencies } from "../currencies";
 import { CreateStripeCredentialsDialog } from "./CreateStripeCredentialsDialog";
+import { MercadoPagoConfigModal } from "./MercadoPagoConfigModal";
+import { OpenPixConfigModal } from "./OpenPixConfigModal";
 import { PaymentAddressSettings } from "./PaymentAddressSettings";
 
 type Props = {
@@ -97,6 +99,26 @@ export const PaymentSettings = ({ options, onOptionsChange }: Props) => {
       additionalInformation: { ...options?.additionalInformation, address },
     });
 
+  const credentialsProps = useMemo(() => {
+    switch (options?.provider) {
+      case PaymentProvider.MERCADO_PAGO:
+        return {
+          type: "mercadopago" as const,
+          providerName: "Mercado Pago",
+        };
+      case PaymentProvider.OPENPIX:
+        return {
+          type: "openpix" as const,
+          providerName: "OpenPix",
+        };
+      default:
+        return {
+          type: "stripe" as const,
+          providerName: "Stripe",
+        };
+    }
+  }, [options?.provider]);
+
   const providers = useMemo(
     () =>
       Object.values(PaymentProvider).map((provider) => ({
@@ -122,7 +144,7 @@ export const PaymentSettings = ({ options, onOptionsChange }: Props) => {
         <p>{t("blocks.inputs.payment.settings.account.label")}</p>
         {workspace && (
           <CredentialsDropdown
-            type="stripe"
+            type={credentialsProps.type}
             scope={{ type: "workspace", workspaceId: workspace.id }}
             currentCredentialsId={options?.credentialsId}
             onCredentialsSelect={updateCredentials}
@@ -130,7 +152,7 @@ export const PaymentSettings = ({ options, onOptionsChange }: Props) => {
             credentialsName={t(
               "blocks.inputs.payment.settings.accountText.label",
               {
-                provider: "Stripe",
+                provider: credentialsProps.providerName,
               },
             )}
           />
@@ -240,11 +262,25 @@ export const PaymentSettings = ({ options, onOptionsChange }: Props) => {
           </Accordion.Panel>
         </Accordion.Item>
       </Accordion.Root>
-      <CreateStripeCredentialsDialog
-        isOpen={isOpen}
-        onClose={onClose}
-        onNewCredentials={updateCredentials}
-      />
+      {options?.provider === PaymentProvider.MERCADO_PAGO ? (
+        <MercadoPagoConfigModal
+          isOpen={isOpen}
+          onClose={onClose}
+          onNewCredentials={updateCredentials}
+        />
+      ) : options?.provider === PaymentProvider.OPENPIX ? (
+        <OpenPixConfigModal
+          isOpen={isOpen}
+          onClose={onClose}
+          onNewCredentials={updateCredentials}
+        />
+      ) : (
+        <CreateStripeCredentialsDialog
+          isOpen={isOpen}
+          onClose={onClose}
+          onNewCredentials={updateCredentials}
+        />
+      )}
     </div>
   );
 };

@@ -257,6 +257,7 @@
         "@typebot.io/whatsapp": "workspace:*",
         "cors": "^2.8.5",
         "google-spreadsheet": "^4.1.4",
+        "mercadopago": "^2.2.0",
         "next": "^16.1.6",
         "nextjs-cors": "^2.1.2",
         "nodemailer": "^8.0.5",
@@ -488,6 +489,7 @@
         "google-spreadsheet": "^4.1.4",
         "ky": "^1.2.4",
         "libphonenumber-js": "1.10.37",
+        "mercadopago": "^2.2.0",
         "node-html-parser": "6.1.5",
         "nodemailer": "^8.0.5",
         "openai": "^6.9.1",
@@ -801,6 +803,18 @@
         "@types/react": "^19.2.14",
       },
     },
+    "packages/forge/blocks/hornerodb": {
+      "name": "@typebot.io/hornerodb-block",
+      "version": "1.0.0",
+      "dependencies": {
+        "@typebot.io/forge": "workspace:*",
+        "@typebot.io/lib": "workspace:*",
+        "ky": "^1.2.4",
+      },
+      "devDependencies": {
+        "@types/react": "^19.2.14",
+      },
+    },
     "packages/forge/blocks/mistral": {
       "name": "@typebot.io/mistral-block",
       "version": "1.0.0",
@@ -960,6 +974,7 @@
         "@typebot.io/elevenlabs-block": "workspace:*",
         "@typebot.io/gmail-block": "workspace:*",
         "@typebot.io/groq-block": "workspace:*",
+        "@typebot.io/hornerodb-block": "workspace:*",
         "@typebot.io/mistral-block": "workspace:*",
         "@typebot.io/nocodb-block": "workspace:*",
         "@typebot.io/open-router-block": "workspace:*",
@@ -3207,6 +3222,8 @@
 
     "@typebot.io/groups": ["@typebot.io/groups@workspace:packages/groups"],
 
+    "@typebot.io/hornerodb-block": ["@typebot.io/hornerodb-block@workspace:packages/forge/blocks/hornerodb"],
+
     "@typebot.io/js": ["@typebot.io/js@workspace:packages/embeds/js"],
 
     "@typebot.io/legacy": ["@typebot.io/legacy@workspace:packages/deprecated/legacy"],
@@ -5282,6 +5299,8 @@
     "media-typer": ["media-typer@0.3.0", "", {}, "sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ=="],
 
     "memfs": ["memfs@3.6.0", "", { "dependencies": { "fs-monkey": "^1.0.4" } }, "sha512-EGowvkkgbMcIChjMTMkESFDbZeSh8xZ7kNSF0hAiAN4Jh6jgHCRS0Ga/+C8y6Au+oqpezRHCfPsmJ2+DwAgiwQ=="],
+
+    "mercadopago": ["mercadopago@2.13.0", "", { "dependencies": { "node-fetch": "^2.7.0", "uuid": "^9.0.0" } }, "sha512-dm096v3Mu2VcW6j3/YJIiIAuGzzUwtGGnNga+SmfK55lpY28r1m7Zi3JyRVxSWtrwYWHT0rKs6ni05gc2kUmDw=="],
 
     "merge-descriptors": ["merge-descriptors@1.0.3", "", {}, "sha512-gaNvAS7TZ897/rVaZ0nMtAyxNyi/pdbjbAwUpFQpN70GqnVfOiXpeUUMKRBmzXaSQ8DdTX4/0ms62r2K+hE6mQ=="],
 
@@ -8148,6 +8167,8 @@
     "mdx-bundler/@babel/runtime": ["@babel/runtime@7.28.3", "", {}, "sha512-9uIQ10o0WGdpP6GDhXcdOJPJuDgFtIDtN/9+ArJQ2NAfAmiuhTQdzkaTGR33v43GYS2UrSA0eX2pPPHoFVvpxA=="],
 
     "mdx-bundler/uuid": ["uuid@9.0.1", "", { "bin": { "uuid": "dist/bin/uuid" } }, "sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA=="],
+
+    "mercadopago/uuid": ["uuid@9.0.1", "", { "bin": { "uuid": "dist/bin/uuid" } }, "sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA=="],
 
     "micromatch/picomatch": ["picomatch@2.3.1", "", {}, "sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA=="],
 

@@ -1,0 +1,39 @@
+import { createAuth, option } from "@typebot.io/forge";
+import { defaultBaseUrl } from "./constants";
+
+export const auth = createAuth({
+  type: "encryptedCredentials",
+  name: "HorneroDB account",
+  schema: option.object({
+    baseUrl: option.string
+      .meta({
+        layout: {
+          label: "Base URL",
+          isRequired: true,
+          helperText:
+            "URL of your HorneroDB instance. Change it only if you are self-hosting.",
+          withVariableButton: false,
+          defaultValue: defaultBaseUrl,
+        },
+      })
+      .transform((value) => value?.replace(/\/$/, "")),
+    apiKey: option.string.meta({
+      layout: {
+        label: "API Key",
+        isRequired: true,
+        helperText:
+          "Generate a workspace-level API key in HorneroDB → Workspace → API Keys.",
+        inputType: "password",
+        withVariableButton: false,
+      },
+    }),
+    workspaceId: option.string.meta({
+      layout: {
+        label: "Workspace ID",
+        isRequired: true,
+        helperText: "The ID (UUID) of your HorneroDB workspace.",
+        withVariableButton: false,
+      },
+    }),
+  }),
+});
