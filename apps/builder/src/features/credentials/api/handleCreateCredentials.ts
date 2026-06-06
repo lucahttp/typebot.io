@@ -3,6 +3,8 @@ import { encrypt } from "@typebot.io/credentials/encrypt";
 import type { Credentials } from "@typebot.io/credentials/schemas";
 import {
   googleSheetsCredentialsSchema,
+  mercadoPagoCredentialsSchema,
+  openPixCredentialsSchema,
   smtpCredentialsSchema,
   stripeCredentialsSchema,
   whatsAppCredentialsSchema,
@@ -27,6 +29,8 @@ const credentialsCreateSchema = z
     smtpCredentialsSchema.pick(inputShape),
     googleSheetsCredentialsSchema.pick(inputShape),
     whatsAppCredentialsSchema.pick(inputShape),
+    mercadoPagoCredentialsSchema.pick(inputShape),
+    openPixCredentialsSchema.pick(inputShape),
     ...Object.values(forgedCredentialsSchemas).map((schema) =>
       schema.pick(inputShape),
     ),

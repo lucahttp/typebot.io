@@ -9,7 +9,6 @@ import { PreviewDrawer } from "@/features/preview/components/PreviewDrawer";
 import { VariablesDrawer } from "@/features/preview/components/VariablesDrawer";
 import { useWorkspace } from "@/features/workspace/WorkspaceProvider";
 import { useRightPanel } from "@/hooks/useRightPanel";
-import { useThemeValue } from "@/hooks/useThemeValue";
 import { EditorProvider } from "../providers/EditorProvider";
 import { useTypebot } from "../providers/TypebotProvider";
 import { BlocksSideBar } from "./BlocksSideBar";
@@ -20,10 +19,6 @@ export const EditorPage = () => {
   const { typebot, currentUserMode } = useTypebot();
   const { workspace } = useWorkspace();
   const editorContainerRef = useRef<HTMLDivElement>(null);
-  const backgroundImage = useThemeValue(
-    "radial-gradient(var(--gray-7) 1px, transparent 0)",
-    "radial-gradient(var(--gray-5) 1px, transparent 0)",
-  );
 
   const isSuspicious = typebot?.riskLevel === 100 && !workspace?.isVerified;
 
@@ -38,12 +33,7 @@ export const EditorPage = () => {
         {isSuspicious && <SuspectedTypebotBanner typebotId={typebot.id} />}
         <TypebotHeader />
         <div
-          className="flex flex-1 relative overflow-clip h-full bg-gray-3 dark:bg-gray-2"
-          style={{
-            backgroundImage: backgroundImage,
-            backgroundSize: "40px 40px",
-            backgroundPosition: "-19px -19px",
-          }}
+          className="flex flex-1 relative overflow-clip h-full bg-gray-3 dark:bg-gray-2 [background-image:radial-gradient(var(--gray-7)_1px,transparent_0)] dark:[background-image:radial-gradient(var(--gray-5)_1px,transparent_0)] [background-size:40px_40px] [background-position:-19px_-19px]"
         >
           {typebot ? (
             <GraphDndProvider>

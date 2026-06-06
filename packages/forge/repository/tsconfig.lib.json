@@ -32,6 +32,9 @@
       "path": "../blocks/segment/tsconfig.lib.json"
     },
     {
+      "path": "../blocks/hornerodb/tsconfig.lib.json"
+    },
+    {
       "path": "../blocks/nocodb/tsconfig.lib.json"
     },
     {

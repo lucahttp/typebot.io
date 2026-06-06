@@ -48,6 +48,40 @@ export const stripeCredentialsSchema = z
   .merge(credentialsBaseSchema);
 export type StripeCredentials = z.infer<typeof stripeCredentialsSchema>;
 
+export const mercadoPagoCredentialsSchema = z
+  .object({
+    type: z.literal("mercadopago"),
+    data: z.object({
+      live: z.object({
+        accessToken: z.string(),
+        publicKey: z.string(),
+      }),
+      test: z.object({
+        accessToken: z.string().optional(),
+        publicKey: z.string().optional(),
+      }),
+    }),
+  })
+  .merge(credentialsBaseSchema);
+export type MercadoPagoCredentials = z.infer<
+  typeof mercadoPagoCredentialsSchema
+>;
+
+export const openPixCredentialsSchema = z
+  .object({
+    type: z.literal("openpix"),
+    data: z.object({
+      live: z.object({
+        secretKey: z.string(),
+      }),
+      test: z.object({
+        secretKey: z.string().optional(),
+      }),
+    }),
+  })
+  .merge(credentialsBaseSchema);
+export type OpenPixCredentials = z.infer<typeof openPixCredentialsSchema>;
+
 export const googleSheetsCredentialsSchema = z
   .object({
     type: z.literal("google sheets"),
@@ -98,6 +132,8 @@ export const creatableCredentialsSchemas = [
   googleSheetsCredentialsSchema,
   stripeCredentialsSchema,
   whatsAppCredentialsSchema,
+  mercadoPagoCredentialsSchema,
+  openPixCredentialsSchema,
 ] as const;
 
 const credentialsSchema = z.discriminatedUnion("type", [
@@ -119,6 +155,8 @@ export const credentialsTypes = [
   "stripe",
   "whatsApp",
   "http proxy",
+  "mercadopago",
+  "openpix",
   ...(Object.keys(forgedCredentialsSchemas) as Array<
     keyof typeof forgedCredentialsSchemas
   >),

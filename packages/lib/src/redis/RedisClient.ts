@@ -69,6 +69,10 @@ export class RedisClient extends ServiceMap.Service<
       const redisUrl = yield* Config.schema(
         Schema.RedactedFromValue(Schema.URL),
         "REDIS_URL",
+      ).pipe(
+        Config.orElse(() =>
+          Config.succeed(Redacted.make(new URL("redis://localhost:6379"))),
+        ),
       );
       const createClient = Effect.sync(
         () =>

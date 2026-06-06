@@ -1,6 +1,8 @@
 import type { Credentials } from "@typebot.io/credentials/schemas";
 import { forgedBlocks } from "@typebot.io/forge-repository/definitions";
 import { Dialog } from "@typebot.io/ui/components/Dialog";
+import { UpdateMercadoPagoCredentialsModalContent } from "@/features/blocks/inputs/payment/components/UpdateMercadoPagoCredentialsModalContent";
+import { UpdateOpenPixCredentialsModalContent } from "@/features/blocks/inputs/payment/components/UpdateOpenPixCredentialsModalContent";
 import { UpdateStripeCredentialsDialogBody } from "@/features/blocks/inputs/payment/components/UpdateStripeCredentialsDialogBody";
 import { SmtpCredentialsUpdateDialogBody } from "@/features/blocks/integrations/sendEmail/components/SmtpCredentialsUpdateDialogBody";
 import { ForgedCredentialsUpdateDialogContent } from "@/features/forge/components/credentials/ForgedCredentialsUpdateDialogContent";
@@ -61,6 +63,22 @@ const CredentialsUpdateDialogPopup = ({
   if (editingCredentials.type === "stripe")
     return (
       <UpdateStripeCredentialsDialogBody
+        credentialsId={editingCredentials.id}
+        onUpdate={onSubmit}
+      />
+    );
+
+  if (editingCredentials.type === "mercadopago")
+    return (
+      <UpdateMercadoPagoCredentialsModalContent
+        credentialsId={editingCredentials.id}
+        onUpdate={onSubmit}
+      />
+    );
+
+  if (editingCredentials.type === "openpix")
+    return (
+      <UpdateOpenPixCredentialsModalContent
         credentialsId={editingCredentials.id}
         onUpdate={onSubmit}
       />

@@ -7,7 +7,10 @@ import {
 import type { Block } from "@typebot.io/blocks-core/schemas/schema";
 import { InputBlockType } from "@typebot.io/blocks-inputs/constants";
 import { defaultEmailInputOptions } from "@typebot.io/blocks-inputs/email/constants";
-import { defaultPaymentInputOptions } from "@typebot.io/blocks-inputs/payment/constants";
+import {
+  defaultPaymentInputOptions,
+  PaymentProvider,
+} from "@typebot.io/blocks-inputs/payment/constants";
 import type { InputBlock } from "@typebot.io/blocks-inputs/schema";
 import { IntegrationBlockType } from "@typebot.io/blocks-integrations/constants";
 import { LogicBlockType } from "@typebot.io/blocks-logic/constants";
@@ -20,6 +23,9 @@ import type {
   SessionState,
   TypebotInSession,
 } from "@typebot.io/chat-session/schemas";
+import { decrypt } from "@typebot.io/credentials/decrypt";
+import { getCredentials } from "@typebot.io/credentials/getCredentials";
+import type { MercadoPagoCredentials } from "@typebot.io/credentials/schemas";
 import { EventType } from "@typebot.io/events/constants";
 import type { InvalidReplyEvent, ReplyEvent } from "@typebot.io/events/schemas";
 import { forgedBlocks } from "@typebot.io/forge-repository/definitions";
@@ -36,6 +42,7 @@ import type {
   SetVariableHistoryItem,
   Variable,
 } from "@typebot.io/variables/schemas";
+import { MercadoPagoConfig, Payment } from "mercadopago";
 import { saveDataInResponseVariableMapping } from "./blocks/integrations/httpRequest/saveDataInResponseVariableMapping";
 import { resumeChatCompletion } from "./blocks/integrations/legacy/openai/resumeChatCompletion";
 import { executeCommandEvent } from "./events/executeCommandEvent";
@@ -117,6 +124,58 @@ export const continueBotFlow = async (
   let continueReply: SuccessReply | SkipReply | undefined;
 
   if (isInputBlock(block) && isInputMessage(reply)) {
+    if (
+      block.type === InputBlockType.PAYMENT &&
+      block.options?.provider === PaymentProvider.MERCADO_PAGO &&
+      reply?.type === "text" &&
+      reply.text !== "success"
+    ) {
+      const isPreview = !newSessionState.typebotsQueue[0].resultId;
+      const credentialsId = block.options.credentialsId;
+      const resultId = newSessionState.typebotsQueue[0].resultId;
+      const workspaceId = newSessionState.workspaceId;
+
+      let isApproved = false;
+
+      if (credentialsId) {
+        try {
+          const credentials = await getCredentials(credentialsId, workspaceId);
+          if (credentials) {
+            const decryptedData = (await decrypt(
+              credentials.data,
+              credentials.iv,
+            )) as MercadoPagoCredentials["data"];
+
+            const accessToken =
+              isPreview && decryptedData.test?.accessToken
+                ? decryptedData.test.accessToken
+                : decryptedData.live.accessToken;
+
+            if (accessToken) {
+              const client = new MercadoPagoConfig({ accessToken });
+              const payment = new Payment(client);
+              const externalReference = resultId || "preview";
+              const searchResult = await payment.search({
+                options: {
+                  external_reference: externalReference,
+                },
+              });
+
+              if (
+                searchResult.results?.some((p: any) => p.status === "approved")
+              ) {
+                isApproved = true;
+              }
+            }
+          }
+        } catch (error) {
+          console.error("Error verifying MercadoPago payment:", error);
+        }
+      }
+
+      reply.text = isApproved ? "success" : "fail";
+    }
+
     const parsedReplyResult = validateAndParseInputMessage(reply, {
       block,
       variables: newSessionState.typebotsQueue[0].typebot.variables,
@@ -627,6 +686,7 @@ const parseRetryMessage = async (
       isPreview: isNotDefined(state.typebotsQueue[0].resultId),
       workspaceId: state.workspaceId,
       sessionStore,
+      resultId: state.typebotsQueue[0].resultId,
     }),
   };
 };

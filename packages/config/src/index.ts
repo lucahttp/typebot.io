@@ -52,7 +52,9 @@ export class WorkflowsServerConfig extends ServiceMap.Service<
 }
 
 const WorkflowsDatabaseConfigSchema = Config.all({
-  databaseUrl: Config.redacted("WORKFLOWS_DATABASE_URL"),
+  databaseUrl: Config.redacted("WORKFLOWS_DATABASE_URL").pipe(
+    Config.orElse(() => Config.redacted("DATABASE_URL")),
+  ),
 });
 
 type WorkflowsDatabaseConfigService = {

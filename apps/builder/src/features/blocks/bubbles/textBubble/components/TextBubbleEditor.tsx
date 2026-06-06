@@ -149,7 +149,7 @@ export const TextBubbleEditor = ({
             onChange(textEditorValueRef.current);
             rememberedSelection.current = editor.selection;
           }}
-          aria-abel="Text editor"
+          aria-label="Text editor"
           className="prevent-group-drag cursor-text p-3 outline-none rounded-b-md border-t-0 border-orange-8 border-2"
         />
         <Popover.Root

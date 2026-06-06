@@ -21,11 +21,13 @@ export const formatInputForChatResponse = async (
     sessionStore,
     isPreview,
     workspaceId,
+    resultId,
   }: {
     variables: Variable[];
     sessionStore: SessionStore;
     isPreview: boolean;
     workspaceId: string;
+    resultId?: string;
   },
 ): Promise<ContinueChatResponse["input"]> => {
   switch (block.type) {
@@ -86,6 +88,7 @@ export const formatInputForChatResponse = async (
             variables,
             isPreview,
             workspaceId,
+            resultId,
           }),
           prefilledValue: getPrefilledInputValue(variables)(block),
         },
@@ -105,11 +108,13 @@ const computeRuntimeOptions = (
     variables,
     isPreview,
     workspaceId,
+    resultId,
   }: {
     sessionStore: SessionStore;
     variables: Variable[];
     isPreview: boolean;
     workspaceId: string;
+    resultId?: string;
   },
 ): Promise<RuntimeOptions> | undefined => {
   switch (block.type) {
@@ -119,6 +124,7 @@ const computeRuntimeOptions = (
         variables,
         isPreview,
         workspaceId,
+        resultId,
       });
     }
   }

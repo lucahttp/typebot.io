@@ -17,6 +17,8 @@ import { gmailBlock } from "@typebot.io/gmail-block";
 import gmailBlockHandlers from "@typebot.io/gmail-block/handlers";
 import { groqBlock } from "@typebot.io/groq-block";
 import groqBlockHandlers from "@typebot.io/groq-block/handlers";
+import { horneroDbBlock } from "@typebot.io/hornerodb-block";
+import horneroDbBlockHandlers from "@typebot.io/hornerodb-block/handlers";
 import { mistralBlock } from "@typebot.io/mistral-block";
 import mistralBlockHandlers from "@typebot.io/mistral-block/handlers";
 import { nocodbBlock } from "@typebot.io/nocodb-block";
@@ -50,6 +52,7 @@ export const forgedBlockHandlers = {
   [togetherAiBlock.id]: togetherAiBlockHandlers,
   [openRouterBlock.id]: openRouterBlockHandlers,
   [nocodbBlock.id]: nocodbBlockHandlers,
+  [horneroDbBlock.id]: horneroDbBlockHandlers,
   [segmentBlock.id]: segmentBlockHandlers,
   [groqBlock.id]: groqBlockHandlers,
   [zendeskBlock.id]: zendeskBlockHandlers,

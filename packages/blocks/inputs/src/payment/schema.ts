@@ -48,9 +48,11 @@ export const paymentInputOptionsSchema = optionBaseSchema.merge(
 );
 
 export const paymentInputRuntimeOptionsSchema = z.object({
-  paymentIntentSecret: z.string(),
+  paymentIntentSecret: z.string().optional(),
+  preferenceId: z.string().optional(),
+  paymentLinkUrl: z.string().optional(),
   amountLabel: z.string(),
-  publicKey: z.string(),
+  publicKey: z.string().optional(),
 });
 
 export const paymentInputSchema = blockBaseSchema.merge(

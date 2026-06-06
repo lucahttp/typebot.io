@@ -26,6 +26,7 @@ export const VariablesButton = ({
   return (
     <Popover.Root {...controls}>
       <Popover.Trigger
+        nativeButton={true}
         render={(popoverProps) => (
           <Tooltip.Root>
             <Tooltip.TriggerButton
