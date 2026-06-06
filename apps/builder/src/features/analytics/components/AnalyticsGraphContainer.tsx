@@ -10,7 +10,6 @@ import { ChangePlanDialog } from "@/features/billing/components/ChangePlanDialog
 import { useTypebot } from "@/features/editor/providers/TypebotProvider";
 import { Graph } from "@/features/graph/components/Graph";
 import { GraphProvider } from "@/features/graph/providers/GraphProvider";
-import { useThemeValue } from "@/hooks/useThemeValue";
 import { orpc } from "@/lib/queryClient";
 import { populateEdgesWithTotalVisits } from "../helpers/populateEdgesWithTotalVisits";
 import { StatsCards } from "./StatsCards";
@@ -32,10 +31,6 @@ export const AnalyticsGraphContainer = ({
   const { t } = useTranslate();
   const { isOpen, onOpen, onClose } = useOpenControls();
   const { typebot, publishedTypebot } = useTypebot();
-  const backgroundImage = useThemeValue(
-    "radial-gradient(var(--gray-7) 1px, transparent 0)",
-    "radial-gradient(var(--gray-5) 1px, transparent 0)",
-  );
   const { data } = useQuery(
     orpc.analytics.getInDepthAnalyticsData.queryOptions({
       input: {
@@ -80,13 +75,8 @@ export const AnalyticsGraphContainer = ({
 
   return (
     <div
-      className="flex w-full relative h-full justify-center overflow-clip bg-gray-3 dark:bg-gray-2"
+      className="flex w-full relative h-full justify-center overflow-clip bg-gray-3 dark:bg-gray-2 [background-image:radial-gradient(var(--gray-7)_1px,transparent_0)] dark:[background-image:radial-gradient(var(--gray-5)_1px,transparent_0)] [background-size:40px_40px] [background-position:-19px_-19px]"
       ref={analyticsContainerRef}
-      style={{
-        backgroundImage: backgroundImage,
-        backgroundSize: "40px 40px",
-        backgroundPosition: "-19px -19px",
-      }}
     >
       {publishedTypebot && stats ? (
         <GraphProvider isReadOnly isAnalytics>
